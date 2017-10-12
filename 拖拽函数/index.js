@@ -13,4 +13,4 @@ function down(ev){
 			document.removeEventListener("mouseup",up);
 		}
 	}
-
+}
