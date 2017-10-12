@@ -7,5 +7,10 @@ function down(ev){
 	function move(ev){
 		box.style.left=ev.clientX-boxX+"px";
 		box.style.top=ev.clientY-boxY+"px";
+		document.addEventListener("mouseup",up);
+		function up(){
+			document.removeEventListener("mousemove",move);
+			document.removeEventListener("mouseup",up);
+		}
 	}
-}
+
