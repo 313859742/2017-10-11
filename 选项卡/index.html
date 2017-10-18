@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>选项卡</title>
+		<style>
+			#box,#box2{
+				height:200px;
+				width:100%;
+			}
+			#box div,#box2 div{
+				width: 100px;
+				height:100px;
+				border:1px solid #000000;
+				margin-top:20px;
+				display: none;
+			}
+			.active{
+				background-color:yellow;
+			}
+			#box .show,#box2 .show{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<input type="button" value="选项一" class="active"/>
+			<input type="button" value="选项二" />
+			<input type="button" value="选项三" />
+			<div class="show">123123</div>
+			<div >456456</div>
+			<div >789789</div>
+		</div>
+		<div id="box2">
+			<input type="button" value="选项一" class="active"/>
+			<input type="button" value="选项二" />
+			<input type="button" value="选项三" />
+			<div class="show">123123</div>
+			<div >456456</div>
+			<div >789789</div>
+		</div>
+		<input type="button" value="按钮一" id="but1"/> 
+		<input type="button" value="按钮二" id="but2"/>
+		<input type="button" value="按钮三" id="but3"/>
+		<input type="button" value="按钮四" id="but4"/>
+		<input type="button" value="按钮五" id="but5"/>
+		<script>
+			function Tab(id){
+				// 获取box元素
+				this.box=document.getElementById(id)
+				this.buts=this.box.querySelectorAll('input');// box下的input元素，是个集合
+				this.cons=this.box.querySelectorAll('div');// box下的内容框 ，是个集合
+				this.num=0;
+				this.timer=null;
+			}
+			Tab.prototype.Event=function(){
+				var _this=this;//存this
+				for(var i=0;i<this.buts.length;i++){// 遍历所有到的input按钮
+					this.buts[i].index=i;
+					this.buts[i].onclick=function(){//给所有到的按钮添加点击事件
+						_this.click(this.index);
+					};
+				}
+			}
+			//标题添加点击事件样式的改变
+			Tab.prototype.click=function(index){
+				// 大清洗
+				for(var i=0;i<this.buts.length;i++){
+					this.buts[i].className='';
+					this.cons[i].className='';
+				}
+				// 样式的改变
+				this.buts[index].className='active';
+				this.cons[index].className='show';
+			}
+			// 自动播放(从左到右)
+			Tab.prototype.aut=function(){
+				var _this=this;
+				//开启定时器之前，先清除
+				clearInterval(this.timer);
+				//定时器开启
+				this.timer=setInterval(function(){
+					// num++
+					_this.num++;
+					//边界处理
+					_this.click(_this.num %= _this.buts.length );
+				},1000);
+			}
+			//自动播放（从右往左）
+			Tab.prototype.cycle=function(){
+				var _this=this;
+				//开启定时器之前，先清除
+				clearInterval(this.timer);
+				//定时器开启
+				this.timer=setInterval(function(){
+					// num--
+					_this.num--;
+					
+					//边界处理（num小于0，等于length-1,否则是num）
+					_this.num=(_this.num<0?_this.buts.length-1:_this.num);
+					_this.click(_this.num);
+				},1000);
+			}
+			// 自动循环停止播放
+			Tab.prototype.stop=function(){
+				clearInterval(this.timer);
+				this.timer=null;
+			}
+			// 获取按钮一的元素
+			var but1=document.getElementById('but1');
+			// 给按钮一添加点击事件，第一个自动播放停止
+			but1.onclick=function(){
+				t.stop();//
+			}
+			//获取按钮二元素
+			var but2=document.getElementById('but2');
+			//给按钮二添加点击事件，第二个自动播放开
+			but2.onclick=function(){
+				t2.aut();
+			}
+			//获取按钮三
+			var but3=document.getElementById('but3');
+			var off=true;//自定义开关为开
+			// 给按钮三添加点击事件，开的都关，关的都开
+			but3.onclick=function(){
+				if(off){// 为真开
+					t.aut();
+					t2.aut();
+				}else{// 否则停止
+					t.stop();
+					t2.stop();
+				}
+			}
+			// 获取按钮四
+			var but4=document.getElementById('but4');
+			//给按钮四添加点击事件，开的关，关的开
+			but4.onclick=function(){
+				if(t.timer){// 假设定时器没关，则执行停止，否则执行自动播放
+					t.stop();
+				}else{
+					t.aut();
+				}
+				if(t2.timer){
+					t2.stop();
+				}else{
+					t2.aut();
+				}
+			}
+			// 获取按钮五元素
+			var but5=document.getElementById('but5');
+			// 给按钮五添加点击事件,第一个第二个都从右往左播放
+			but5.onclick=function(){
+				t.cycle();
+				t2.cycle();
+			}
+			var t=new Tab('box');
+			var t2=new Tab('box2');
+			
+			t.Event();
+			t.aut();
+			t2.Event();
+//			t2.aut();
+			/*
+			 需求：按钮一第一个自动播放停
+			 		按钮二第二个开
+			 		按钮三开的都关，开的都开
+			 		按钮四开的关，关的开
+			 		按钮五倒着轮播
+			 * */
+		</script>
+	</body>
+</html>
