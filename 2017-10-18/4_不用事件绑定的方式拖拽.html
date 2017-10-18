@@ -26,54 +26,33 @@
 
     Drag.prototype.init = function(){
         var _this = this;
-        this.box.addEventListener('mousedown',down);
-        function down(ev){
+        this.box.onmousedown = function(){
             _this.down(ev);
         }
     }
-
     Drag.prototype.down = function(ev){
         var _this = this;
         this.disX = ev.clientX - this.box.offsetLeft;
         this.disY = ev.clientY - this.box.offsetTop;
-        var move = function(ev){
+        
+        document.onmousemove = function(ev){
             _this.move(ev);
         }
-        var up = function(ev){
-            _this.up(ev,move,up);
+        document.onmouseup = function(){
+            _this.up();
         }
-        document.addEventListener('mousemove',move);
-        document.addEventListener('mouseup',up);
-
-        ev.preventDefault();
     }
-
     Drag.prototype.move = function(ev){
         this.box.style.left = ev.clientX - this.disX + 'px';
         this.box.style.top = ev.clientY - this.disY + 'px';
     }
-    Drag.prototype.up = function(ev,move,up){
-        document.removeEventListener('mousemove',move);
-        document.removeEventListener('mouseup',up);
+    Drag.prototype.up = function(ev){
+        document.onmousemove = document.onmouseup = null;
     }
-
     var d = new Drag('box');
 
     d.init();
 
-
-    /*
-        move = function(ev){
-            console.log(1);
-        }
-    
-    */
-    // move();
-    // console.log(move)
-    // var move = function(ev){
-    //     console.log(1);
-    // }
-    
 
 
 </script>
