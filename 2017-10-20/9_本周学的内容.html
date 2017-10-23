@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    /*
+
+        {start,end}
+        \w \W \s \S \D \d \b \B
+
+        new RegExp('\\b' + sClass + '\\b');
+
+        \1 \2
+
+        把特性相同的代码，归为一类，把细节描述挂在原型上的编程方式，以谁来做为主
+
+        function fn(number){}  
+        function fn(string){}
+
+        https://segmentfault.com/q/1010000004633071
+
+        原型：函数下的一个属性
+        原型链:对象下的一个属性，是构造函数原型的桥梁
+
+        new:
+            直接调用
+            内部指向实例化对象
+            默认return this  
+            return 简单 还是this  复合 就是复合
+
+
+
+    */
+
+    // function T(){}
+    // // T.say = function(){
+    // //     alert('Tt');
+    // // }
+    // T.prototype.say = function(){
+    //     alert('321');
+    // }
+    // Function.prototype.say = function(){
+    //     alert('FN');
+    // }
+    // Function.say = function(){
+    //     alert('FFN');
+    // }
+    // Object.prototype.say = function(){
+    //     alert('OO');
+    // }
+    // Object.say = function(){
+    //     alert('OOOOOO');
+    // }
+   
+    // var t = new T;
+    // // t.say = function(){
+    // //     alert('tt');
+    // // }
+    // // Function.say();
+    // Object.say();
+
+
+
+    /*
+        window
+        事件
+        undefined
+        父级
+        写啥是啥
+    */
+
+    document.onclick = fn;
+
+    function fn(){
+        console.log(this); //document
+        (function(){
+            console.log(this); //window
+
+            function fnn(){
+                "use strict"
+                console.log(this); //fnn{}
+                var ff = () => {
+                    console.log(this);
+                    return function(){console.log(this)}
+                };
+                ff().call(document); //undefined
+            }
+            new fnn; //没new就是undefined
+        })()
+    }
+
+    //call(this,1,2,3,4)   apply(this,[1,2,3,4])
+
+    
+
+
+</script>
+</body>
+</html>

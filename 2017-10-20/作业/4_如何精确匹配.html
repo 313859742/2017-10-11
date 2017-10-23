@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+   
+<script>
+    
+    let str = '2017-2-29';
+
+    let arr = str.match(/\d+/g);
+
+    var d = new Date(arr[0],arr[1]-1,arr[2]);
+
+
+    console.log( d.getMonth()+1 )
+
+
+
+</script>
+</body>
+</html>

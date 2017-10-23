@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    
+    class Events {
+        constructor(){
+            this.zdy = this.zdy || {};
+        }
+        on(evName,fn){
+            this.zdy[evName] = this.zdy[evName] || [];
+            this.zdy[evName].push(fn);
+        }
+        trigger( evName ){
+            if(!this.zdy[evName])return;
+            this.zdy[evName].forEach((ele)=> ele())
+        }
+        //解除订阅
+        off(evName,fnName){
+            this.zdy[evName].forEach((ele,i)=>{
+                if(ele == fnName){
+                    this.zdy[evName].splice(i,1);
+                }
+            });
+        }
+    }
+
+    const o = new Events;
+    const f = fn.bind(document)
+    function fn(){
+        console.log(this);
+        alert('上滚了');
+        o.off('上滚',f);
+    }
+    
+    o.on('上滚',f);
+
+    document.onmousewheel = function(ev){
+        if(ev.wheelDelta > 0){
+            o.trigger('上滚');
+        }
+    }
+    console.log(o);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    /*
+        arr.filter(function(e,i){return 需要的内容}) 返回为新的数组（过滤后的数组）
+    */
+    // var arr = [1,2,3,4,5];
+    console.log(arr.filter((e,i)=>{
+        if(i%2){
+            return e;
+        }
+    }));
+</script>
+</body>
+</html>
