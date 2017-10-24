@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		姓名：<input type="text" name="user" id="userId"/>
+		<input type="button" value="查找" id="but"/>
+		<ul></ul>
+		<script src="ajax(4).js"></script>
+		<script>
+			// 获取要操作的元素
+			const userId=document.getElementById('userId');
+			const but=document.getElementById('but');
+			const ul=document.querySelector('ul');
+			// userId添加点击事件
+			but.onclick=function(){
+				//创建ajax
+				ajax({
+					// ajax的地址
+					url:'php/ajax.php',
+					data:{
+		                user:userId.value
+		           },
+					success:function(data){
+						// code等于0，则匹配上，将查到的信息显示出来
+						if(data.code === 0){
+							let li=document.createElement('li');
+							li.innerHTML='我的名字叫做:'+data.data.name+',我的年龄：'+data.data.age+',我的爱好：'+data.data.hobby+',我的信息：'+data.data.info;
+							ul.appendChild(li);
+						}else if(data.code === 1){// code等于1，则没匹配上，弹出查无此人
+							alert('查无此人！');
+						}
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
