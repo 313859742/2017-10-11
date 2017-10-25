@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin:0px;
+				padding:0px;
+			}
+			#box{
+				width:100%;
+				margin-top:100px;
+				height:300px;
+				position:relative;
+				
+			}
+			.list{
+				width:1200px;
+				height:300px;
+				position:absolute;
+				left:50%;
+				margin-left:-600px;
+				overflow:hidden;
+			}
+			.btn{
+				display:inline-block;
+				position:absolute;
+				top:100px;
+				width:50px;
+				height:100px;
+				background:deepskyblue;
+				color:white;
+				text-align:center;
+				line-height:100px;
+				text-decoration:none;
+				font-size:30px;
+				z-index:10;
+			}
+			.next{right:0px;}
+			ul{
+				list-style:none;
+			}
+			li{
+				position:absolute;
+				top:0px;
+				left:-224px;
+				opacity:0;
+				transition:all 0.3s ease-out;
+			}
+			img{
+				width:751px;
+				height:300px;
+				border:none;
+				float:left;
+			}
+			/*
+			 
+			 * translate3d(x,y,z)只是规定3D转换的一种形式，此函数用来规定指定元素在三维空间中的位移。
+					参数解析:
+					1.x:表示在x轴方向的位移。
+					2.y:表示在y轴方向的位移。
+					3.z:表示在z轴方向的位移。
+			 * 
+			 * transform-origin:设置旋转元素的基点位置
+			 * transform-origin: x-axis y-axis z-axis;
+			 * x-axis  定义视图被置于 X 轴的何处。可能的值：left,center,right,length,%
+			   y-axis  定义视图被置于 Y 轴的何处。可能的值：left,center,right,length,%
+			   z-axis  定义视图被置于 Z 轴的何处。可能的值：length	
+			 * */
+			.p1{
+				transform:translate3d(-224px,0,0) scale(0.81);
+			}
+			.p2{
+				transform:translate3d(0px,0,0) scale(0.81);
+				
+			}
+			.p3{
+				transform:translate3d(224px,0,0) scale(0.81);
+				transform-origin:0 50%;
+				opacity: 0.6;
+				z-index: 2;
+			}
+			.p4{
+				transform:translate3d(449px,0,0) scale(1);
+				z-index: 3;
+				opacity: 1;
+			}
+			.p5{
+				transform:translate3d(672px,0,0) scale(0.81);
+				transform-origin:100% 50%;
+				opacity: 0.6;
+				z-index: 2;
+			}
+			.p6{
+				transform:translate3d(896px,0,0) scale(0.81);
+			}
+			.p7{
+				transform:translate3d(1120px,0,0) scale(0.81);
+			}
+			
+			.buttons{
+				position: absolute;
+				width: 1200px;
+				height: 30px;
+				bottom: 0;
+				left: 50%;
+				margin-left: -600px;
+				text-align: center;
+				padding-top: 10px;
+				margin-bottom:-50px;;
+			}
+			.buttons a{
+				display: inline-block;
+				width: 40px;
+				height: 5px;
+				padding-top: 4px;
+				cursor: pointer;
+				
+			}
+			span{
+				display: block;
+				width: 40px;
+				height: 1px;
+				background: red;
+			}
+			.blue{
+				background: blue;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<div class="list">
+				<ul>
+					<li class="p7"><a href="javascript:;"><img src="img/1.png" alt="" /></a></li>
+					<li class="p6"><a href="javascript:;"><img src="img/2.png" alt="" /></a></li>
+					<li class="p5"><a href="javascript:;"><img src="img/3.png" alt="" /></a></li>
+					<li class="p4"><a href="javascript:;"><img src="img/44.jpg" alt="" /></a></li>
+					<li class="p3"><a href="javascript:;"><img src="img/55.jpg" alt="" /></a></li>
+					<li class="p2"><a href="javascript:;"><img src="img/66.jpg" alt="" /></a></li>
+					<li class="p1"><a href="javascript:;"><img src="img/77.jpg" alt="" /></a></li>
+				</ul>
+			</div>
+			<a href="javascript:;" class="prev btn">&lt;</a>
+			<a href="javascript:;" class="next btn">&gt;</a>
+			<div class="buttons">
+				<a href="javascript:;"><span class="blue"></span></a>
+				<a href="javascript:;"><span></span></a>
+				<a href="javascript:;"><span></span></a>
+				<a href="javascript:;"><span></span></a>
+				<a href="javascript:;"><span></span></a>
+				<a href="javascript:;"><span></span></a>
+				<a href="javascript:;"><span></span></a>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var box=document.getElementById("box");//获取父级元素box
+			var Li=document.getElementsByClassName("list")[0];//获取列表父级元素
+			var lies=document.querySelectorAll(".list li");//获取所有的列表
+			var btns=document.getElementsByClassName("btn");//获取左右切换按钮
+			var aes=document.querySelectorAll(".buttons a");//获取图片下面的a标签
+			var spans=document.querySelectorAll(".buttons span");//获取图片下面的span标签
+			var classArr=["p7","p6","p5","p4","p3","p2","p1"];//存储类名的数组
+			var index=0;//记录span的位置
+			var timer=null;//定时器
+			lies=Array.from(lies);
+			aes=Array.from(aes);
+			
+			//使用事件委托的方式实现左右切换
+			Li.onclick=function(ev){
+				var trget=findClass(ev.target,"li");
+				if(trget==""){
+					return;
+				}else{
+					if(trget.className.toLocaleLowerCase()=="p3"){
+						prev();
+						return false;
+					}
+					if(trget.className.toLocaleLowerCase()=="p5"){
+						next();
+						return false;
+					}
+				}
+			}
+			
+			//递归找父级元素
+			function findClass(obj,nodename){
+				if(obj.nodeName.toLocaleLowerCase()==nodename){
+					return obj;
+				}
+				return findClass(obj.parentNode,nodename);
+			}
+			//执行定时器
+			timer=setInterval(next,1500);
+			//鼠标移入box清除定时器
+			box.onmouseover=function(){
+				clearInterval(timer);
+			}
+			//鼠标移出box打开定时器
+			box.onmouseleave=function(){
+				timer=setInterval(next,1500);
+			}
+			//上一张按钮点击事件
+			btns[0].addEventListener("click",prev,false);
+			//下一张按钮点击事件
+			btns[1].addEventListener('click',next,false);
+			
+			//上一张运动函数
+			function prev(){
+				classArr.unshift(classArr[classArr.length-1]);//将数组最后一个元素插入最前面
+				classArr.pop();//删除最后一个元素
+				//将重新排序后的类名赋值给列表，在页面上重新显示
+				lies.forEach(function(e,i){
+					e.className="";
+					e.className=classArr[i];
+				})
+				//span位置的变化
+				index--;
+				if(index<0){
+					index=classArr.length-1;
+				}
+				show();
+			}
+			//下一张运动函数
+			function next(){
+				classArr.push(classArr[0]);//将数组第一个元素插入到最后
+				classArr.shift();//删除第一个元素
+				//将重新排序后的类名赋值给列表，在页面上重新显示
+				lies.forEach(function(e,i){
+					e.className="";
+					e.className=classArr[i];
+				})
+				//span位置的变化
+				index++;
+				if(index>classArr.length-1){
+					index=0;
+				}
+				show();
+			}
+			
+			//点击a标签切换
+			aes.forEach(function(e,i){
+				e.onclick=function(){
+					var myindex=i;
+					var disIndex=myindex-index;
+					if(disIndex==0){
+						return;
+					}else if(disIndex>0){
+						var newArr=classArr.splice(0,disIndex);//将0,disIndex中的字符串截取出来
+						classArr=classArr.concat(newArr);//将原来剩余的数组部分和截取出来的拼接起来形成一个新的数组
+						//循环新的数组，并且将类名赋值给列表，在页面上重新显示
+						lies.forEach(function(e,i){
+							e.className="";
+							e.className=classArr[i];
+						})
+						index=myindex;
+						show();
+					}else if(disIndex<0){
+						var oldArr=classArr.reverse().splice(0,-disIndex);//将0,disIndex中的字符串截取出来
+						classArr=classArr.concat(oldArr);//将原来剩余的数组部分和截取出来的拼接起来形成一个新的数组
+						classArr.reverse();
+						//循环新的数组，并且将类名赋值给列表，在页面上重新显示
+						lies.forEach(function(e,i){
+							e.className="";
+							e.className=classArr[i];
+						})
+						index=myindex;
+						show();
+					}
+				}
+			})
+			
+		
+			//span背景颜色的变化
+			function show(){
+				//清除所有span的样式
+				for(var i=0;i<spans.length;i++){
+					spans[i].className="";
+				}
+				//将当前索引值为index的span添加上类名
+				spans[index].className="blue";
+			}
+			
+		</script>
+	</body>
+</html>
