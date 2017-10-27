@@ -1,0 +1,99 @@
+<!DOCTYPE >
+<html>
+	<head>
+		<meat charset="utf-8"/>
+		<title></title>
+		<style>
+			body{
+				margin:0;
+				background-color:greenyellow;
+				background-size:100% ;
+			}
+			ul{
+				padding:0;
+				margin:0;
+				list-style: none;
+			}
+			#ul{
+				width:1200px;
+				margin:auto;
+				padding:20px;
+			}
+			.line{
+				width:200px;
+				border:1px solid #000;			
+				float:left;	
+				margin-right: 20px;
+			}
+			.line div{
+				width:200px;
+				
+			}
+			.line div img{
+				width:200px;
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<ul id="ul">
+			<li class="line">
+				<!--<div>
+					<img src="bg.jpg"/>
+				</div>-->
+			</li>
+			<li class="line">
+				<!--<div>
+					<img src=""/>
+				</div>-->
+			</li>
+			<li class="line">
+				<!--<div>
+					<img src=""/>
+				</div>-->
+			</li>
+			<li class="line">
+				<!--<div>
+					<img src=""/>
+				</div>-->
+			</li>
+			<li class="line">
+				<!--<div>
+					<img src=""/>
+				</div>-->
+			</li>
+		</ul>
+		<script src="jsonp_1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			// 获取当前要操作的元素
+			const li=Array.from(document.querySelectorAll('li'));//用Arroy.from()方法将类数组转成对象
+			const line=document.querySelectorAll('li');
+			/*
+			 http://www.wookmark.com/api/json/popular?page=0&callback=jquery150906861305405917795684934788
+			 * */
+			Pinterest();//调用执行
+			// 将数组渲染到页面上
+			function Pinterest(){
+				jsonp({
+					url:'http://www.wookmark.com/api/json/popular',// 链接地址
+					data:{	
+					},
+					callback:'callback',//函数名
+					success:function(data){
+						console.log(data);
+						data.forEach((e,i)=>{//遍历data
+							// 创建div
+							const div=document.createElement('div');
+							const img=new Image();//创建iMg标签
+							img.src=e.preview;//img的路径
+							div.appendChild(img);//将img标签放到div里面去
+							line.appendChild(div);// 将div放到li里面去
+						});
+					}
+				})
+			}
+			
+			
+		</script>
+	</body>
+</html>
