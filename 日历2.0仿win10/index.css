@@ -1,0 +1,88 @@
+body{
+	background-color: #363839;
+}
+.box{
+	width: 450px;
+	border: 1px solid rgba(129,136,145,.5);
+	background-color: rgba(0,0,0,0.1);
+	color: #fff;
+}
+.box .top{
+	height: 110px;
+	padding: 30px 0 0 30px;
+	border-bottom: 1px solid rgba(129,136,145,.3);
+}
+.box .top .num-time{
+	font-size: 44px;
+	line-height: 46px;
+	color: #fff;
+	font-weight: 200;
+	display: block;
+	overflow: hidden;
+}
+.box .top .date-time{
+	font-size: 18px;
+	line-height: 50px;
+	display: block;
+	color: #cc7bd9;
+}
+.box .bottom{
+	box-sizing: border-box;
+	height: 480px;
+	padding: 20px 16px 0 16px;
+}
+.box .bottom .top-time{
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+.box .bottom .top-time .left-time{
+	float: left;
+	font-size: 18px;
+	line-height: 26px;
+	text-indent: 18px;
+}
+.box .bottom .top-time .right-btns{
+	float: right;
+	margin-right: 6px;
+}
+.box .bottom .top-time .right-btns span{
+	float: left;
+	font-size: 30px;
+	line-height: 26px;
+	width: 58px;
+	text-align: center;
+	font-weight: 100;
+	cursor: pointer;
+}
+.bottom .week{
+	overflow: hidden;
+}
+.bottom .week span{
+	float: left;
+	width: 58px;
+	height: 50px;
+	margin-right: 1px;
+	text-align: center;
+	line-height: 50px;
+}
+.bottom .day{
+	height: 324px;
+	overflow: hidden;
+}
+.bottom .day span{
+	float: left;
+	box-sizing: border-box;
+	width: 58px;
+	height: 50px;
+	font-size: 18px;
+	line-height: 50px;
+	text-align: center;
+	margin:0 1px 4px 0;
+}
+.bottom .set{
+	float: right;
+	font-size: 18px;
+	color: #cc7bd9;
+	cursor: pointer;
+	margin: 10px 30px 0 0;
+}
