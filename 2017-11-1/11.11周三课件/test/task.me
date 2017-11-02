@@ -91,4 +91,6 @@
         module.exports   模块导出（默认导出是一个空对象，exprots.a=1,即相当于将module.exports等于1，）
         exports
 		接收的是module.exports的导出，exports和module.exports引用的地址相等，
-		如果给exports赋值，相当于将module.exports
+		如果给exports赋值，相当于将module.exports和exports的链断掉，即直接指向exports不在指向module.xports
+		一般直接写module.exports,它后面写什么即导出什么就好，、
+		不能直接给exports赋值
