@@ -62,28 +62,33 @@
 			npm i 安装依赖的时候
 			声明命令的时候，即查看里面声明了什么命令（package.json的文件）
 			查看项目依赖的时候
-			查看main字段加载的是什么文件
+			查看main字段加载的是什么文件，即查看这个项目到的样子，就要需要打开package.json查看
 			
         *如何在里面声明命令：
 			在scripts里面声明
             在里面声明命令的好处:
+				很方便的描述出和本项目相关的一些命令操作，
 				
     如何安装依赖 (声明为生产还是开发)：
-		声明为生产依赖的命令：npm i -S react react-dom
-		声明为开发依赖的命令：npm i -D babel-loader-react 
-	
+		npm run dev
+		声明为生产依赖的命令：npm i -S(/--save) react react-dom
+				"dist":"webpack -p"（针对于生产的需要打包的工具）
+		声明为开发依赖的命令：npm i -D(/--save-dev) babel-loader-react 
+				"dev":"webpack "(可以写任何命令，命名自己的变量，)
 
 关于模块化语法
     es6
-        import 'f.js'    导入js文件
-        import a from './ds.js'  --默认导入方式
-        import a,{b,c} from './ds.js'   标准的导入方式
-        import a,{b as ccd,c} from './ds.js' 标准导入方式（b = ccd || c）
-
+        import 'f.js'    导入js文件模块（让这个模块运行起来，但是不需要暴露任何借口）
+        import a from './ds.js'  --默认导入方式（移入模块的默认导出，然后让a 的变量接收它的默认导出）
+        import a,{b,c} from './ds.js'   标准的导入方式（让a的变量接收它的导出，接收b,c的标准导出）
+        import a,{b as ccd,c} from './ds.js' 标准导入方式（让a的变量接收ds.js的默认导出 ， b = ccd ，c）
+				也可以let name=c;这里面存在两个变量，{b as ccd},这种形式只存在一个ccd的名字，b被ccd代替了
         export   标准导出方式
         export default   默认导出方式
 
     commonJS
-        require('./a.js')  引入node.js模块
-        module.exports   模块导出
+        require('./a.js')  （require导入）
+        module.exports   模块导出（默认导出是一个空对象，exprots.a=1,即相当于将module.exports等于1，）
         exports
+		接收的是module.exports的导出，exports和module.exports引用的地址相等，
+		如果给exports赋值，相当于将module.exports
