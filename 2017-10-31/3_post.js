@@ -26,42 +26,46 @@ http.createServer((req,res)=>{
 
         req.on('end',()=>{}) 当数据接收完成会进end这个事件，只要在end中说明数据已经传输完成
 
+        end之后不能有write了，不然会报错。
     */
-    fs.readFile(addName,(error,data)=>{
-        if(error){
-            res.write('404');
-        }else{
-            res.write(data);
-        }
-        res.end();
-    });
-    req.on('data',(dd)=>{
-        result += dd;
-    });
-    req.on('end',(next)=>{
-        //把字符串转成对象
-        let json = {code:0};
-        result = querystring.parse(result.toString());
-        let onOff = sql.find(e=>e.name == result.user);
-        // console.log(typeof result);
-        if(result.act == 'login'){
-            if(onOff){
-                if(onOff.name == result.user && onOff.password == result.pass){
-                    json.msg = 'success login';
+    if(urlName == '/user'){
+        req.on('data',(dd)=>{
+            result += dd;
+        });
+        req.on('end',()=>{
+            //把字符串转成对象
+            let json = {code:0};
+            result = querystring.parse(result.toString());
+            let onOff = sql.find(e=>e.name == result.user);
+            // console.log(typeof result);
+            if(result.act == 'login'){
+                if(onOff){
+                    if(onOff.name == result.user && onOff.password == result.pass){
+                        json.msg = 'success login';
+                    }else{
+                        json.code = 1;
+                        json.msg = 'username or password error!';
+                    }
                 }else{
-                    json.code = 1;
-                    json.msg = 'username or password error!';
+                    json.code = 2;
+                    json.msg = 'no person';
                 }
-            }else{
-                json.code = 2;
-                json.msg = 'no person';
+                
+                // console.log(json)
+                res.write(JSON.stringify(json));
+                res.end();
             }
-            
-            // console.log(json)
-            res.write(JSON.stringify(json));
+        });
+    }else{
+
+        fs.readFile(addName,(error,data)=>{
+            if(error){
+                res.write('404');
+            }else{
+                res.write(data);
+            }
             res.end();
-        }
-        
-    });
+        });
+    }
 
 }).listen(80);

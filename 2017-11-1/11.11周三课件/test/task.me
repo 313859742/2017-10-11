@@ -1,0 +1,89 @@
+1. 把项目运行起来
+2. 把 一下 的问题理顺
+
+
+关于 .babelrc 这个配置文件
+    干什么的：
+		匹配规则：预设和插件
+    什么时候会被使用：
+		打包的时候
+    如何配置 预设和插件：
+		根据写的代码用的是es6还是
+关于 babel
+    干什么的
+		把能转成es5的代码转成es5
+    如何在 cli 使用
+		在命令行中使用babel命令
+    如何在 webpack 使用
+		使用babel-loader
+    基于什么运行的    
+		(插件)
+    预设是什么 
+		(插件的集合)
+
+关于 webpack 的
+    干什么的
+		打包，加载，使用loder预处理模块
+    入口是什么意思, 如何配置
+		入口是指用来引入依赖树的根文件夹
+       配置方式--entry:"文件地址"
+    输出是什么意思, 如何配置(文件名, 输出路径)
+		输出是指输出打包后的文件（输出打包后的结果）
+       配置方式
+       const paty=require("path");
+       output:{
+            filename:"打包的文件名",
+            path:path.resolve(__direname,"打包的文件夹")
+       }
+    什么是 loader,
+		loader是用于转换应用程序的资源文件。（webpack使用loader处理模块）
+    在什么情况下会让 loader 起作用
+		当某一个rule被匹配到之后
+		在需要使用预设和插件处理问题时
+    如何在 webpack 使用 babel-loader
+		看配置
+		使用方法:
+            module: {
+                rules: [
+                    {
+                        test: /.js$/,
+                        use: [ 'babel-loader' ],
+                    }
+                ]
+              }
+
+关于 npm 的
+    干什么用的
+		管理项目的依赖（可以安装也可以卸载）
+    关于package.json的文件
+        如何生成：
+			npm init 命令就能自动生成
+        什么情况下会被使用：
+			npm i 安装依赖的时候
+			声明命令的时候，即查看里面声明了什么命令（package.json的文件）
+			查看项目依赖的时候
+			查看main字段加载的是什么文件
+			
+        *如何在里面声明命令：
+			在scripts里面声明
+            在里面声明命令的好处:
+				
+    如何安装依赖 (声明为生产还是开发)：
+		声明为生产依赖的命令：npm i -S react react-dom
+		声明为开发依赖的命令：npm i -D babel-loader-react 
+	
+
+关于模块化语法
+    es6
+        import 'f.js'    导入js文件
+        import a from './ds.js'  --默认导入方式
+        import a,{b,c} from './ds.js'   标准的导入方式
+        import a,{b as ccd,c} from './ds.js' 标准导入方式（b = ccd || c）
+
+        export   标准导出方式
+        export default   默认导出方式
+
+    commonJS
+        require('./a.js')  引入node.js模块
+        module.exports   模块导出
+        exports
